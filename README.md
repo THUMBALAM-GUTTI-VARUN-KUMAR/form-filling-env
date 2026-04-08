@@ -1,98 +1,196 @@
-title: Form Filling
+---
+title: Form Filling OpenEnv
 emoji: 🚀
 colorFrom: blue
 colorTo: purple
 sdk: docker
 pinned: false
-Form Filling OpenEnv
+---
 
-OpenEnv-compatible FastAPI backend — no LLMs, no external APIs, fully deterministic.
+# 📋 Form Filling OpenEnv
 
-📋 Form Filling OpenEnv
-OpenEnv-compatible FastAPI backend — no LLMs, no external APIs, fully deterministic.
+OpenEnv-compatible FastAPI backend for structured information extraction using **LLM + Rule-Based fallback**.
 
-An environment where an agent extracts structured contact data (name, age, city, phone) from messy, unstructured user text.
+An intelligent environment where an agent extracts structured contact data (**name, age, city, phone**) from messy, unstructured user text.
 
-🚀 Quick Start
-Local
+Supports:
+
+- ✅ LLM-powered extraction via hackathon LiteLLM proxy  
+- ✅ Rule-based fallback if LLM fails/unavailable  
+- ✅ OpenEnv-compatible FastAPI backend  
+- ✅ Docker / HuggingFace deployment ready  
+
+---
+
+# 🚀 Quick Start
+
+## Local
+
+```bash
 pip install -r requirements.txt
 uvicorn app:app --host 0.0.0.0 --port 7860
-Docker
+```
+
+## Docker
+
+```bash
 docker build -t form-filling-openenv .
 docker run -p 7860:7860 form-filling-openenv
-HuggingFace Spaces
-Set SDK: Docker in your Space settings. The Dockerfile already exposes port 7860.
+```
 
-🔌 API Reference
-GET /
-Health check — returns environment metadata.
+## HuggingFace Spaces
 
-POST /reset
-Start a new episode.
+Set SDK: **Docker** in Space settings.
 
-Request
+Dockerfile already exposes **port 7860**.
 
-{ "task": "medium", "seed": 42 }
-task — easy | medium | hard (default: medium) seed — optional integer for reproducibility
+---
 
-Response
+# 🔌 API Reference
 
+## GET /
+
+Health check endpoint.
+
+Returns environment metadata.
+
+---
+
+## POST /reset
+
+Start new episode.
+
+### Request
+
+```json
+{
+  "task": "medium",
+  "seed": 42
+}
+```
+
+### Parameters
+
+- `task` → easy / medium / hard  
+- `seed` → optional integer  
+
+---
+
+### Response
+
+```json
 {
   "session_id": "uuid",
   "observation": "hey its prathik rao. im 27. blr based. reach me on 98765 43210.",
-  "task": "medium",
-  "state_space": { "type": "text", "description": "..." },
-  "action_space": { "type": "dict", "fields": ["name","age","city","phone"], "...": "..." },
-  "reward_range": [0.0, 1.0]
+  "task": "medium"
 }
-POST /step
-Submit the agent's extracted fields.
+```
 
-Request
+---
 
+## POST /step
+
+Submit extracted fields.
+
+### Request
+
+```json
 {
-  "session_id": "uuid-from-reset",
+  "session_id": "uuid",
   "action": {
-    "name":  "Prathik Rao",
-    "age":   "27",
-    "city":  "Bangalore",
+    "name": "Prathik Rao",
+    "age": "27",
+    "city": "Bangalore",
     "phone": "9876543210"
   }
 }
-Response
+```
 
+---
+
+### Response
+
+```json
 {
-  "session_id": "uuid",
-  "observation": "hey its prathik rao. im 27. blr based. reach me on 98765 43210.",
   "reward": 1.0,
-  "done": true,
-  "info": {
-    "name":  { "predicted": "Prathik Rao", "expected": "Prathik Rao", "reward": 1.0 },
-    "age":   { "predicted": "27",          "expected": "27",          "reward": 1.0 },
-    "city":  { "predicted": "Bangalore",   "expected": "Bangalore",   "reward": 1.0 },
-    "phone": { "predicted": "9876543210",  "expected": "9876543210",  "reward": 1.0 }
-  }
+  "done": true
 }
-🏆 Reward Scheme
-Outcome	Score
-Exact match	1.0
-Partial match (alias / substring / age ±1)	0.5
-Wrong or missing	0.0
-Episode reward = mean(field scores) → range [0.0, 1.0]
+```
 
-📊 Difficulty Levels
-Level	Description
-easy	Fully labelled, structured input
-medium	Abbreviations, casual phrasing, some missing fields
-hard	Hinglish, slang, conflicting phones, approximate ages
-🗂 Project Structure
-├── app.py          ← FastAPI backend (OpenEnv API)
-├── env.py          ← FormEnv: reset(), step(), scoring
-├── agent.py        ← RuleBasedAgent (regex + keyword matching)
-├── inference.py    ← CLI runner: [START][STEP]x5[END]
-├── dataset.json    ← 50 labelled examples (easy/medium/hard)
-├── openenv.yaml    ← OpenEnv config
-├── requirements.txt
-└── Dockerfile
-ℹ️ Note
-"No external APIs or LLMs are used. The environment is fully self-contained and runs offline."
+---
+
+# 🏆 Reward Scheme
+
+| Outcome | Score |
+|--------|------|
+| Exact Match | 1.0 |
+| Partial Match | 0.5 |
+| Wrong/Missing | 0.0 |
+
+Final Reward:
+
+```text
+Average(field_scores)
+```
+
+Range:
+
+```text
+0.0 → 1.0
+```
+
+---
+
+# 📊 Difficulty Levels
+
+| Level | Description |
+|-------|------------|
+| Easy | Structured labelled inputs |
+| Medium | Abbreviations + casual phrasing |
+| Hard | Hinglish/slang/noisy/adversarial |
+
+---
+
+# 🗂 Project Structure
+
+```text
+app.py            FastAPI backend
+server/app.py     Deployment server entry
+env.py            OpenEnv environment logic
+agent.py          RuleBased fallback agent
+inference.py      Main evaluation runner
+dataset.json      Training/evaluation examples
+openenv.yaml      OpenEnv config
+requirements.txt  Dependencies
+Dockerfile        Deployment container
+```
+
+---
+
+# ⚙️ Architecture
+
+This project uses:
+
+### Primary:
+- LiteLLM/OpenAI-compatible API proxy for intelligent extraction
+
+### Fallback:
+- Regex/Rule-based parsing if LLM unavailable
+
+This ensures:
+
+- Robust performance  
+- Proxy validation compatibility  
+- Graceful failure handling  
+
+---
+
+# ℹ️ Note
+
+Built for **Meta x PyTorch Hackathon OpenEnv Challenge**.
+
+Optimized for:
+
+- Multi-mode deployment  
+- HuggingFace Spaces  
+- Hackathon validator compatibility
