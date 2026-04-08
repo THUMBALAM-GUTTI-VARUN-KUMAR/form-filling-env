@@ -5,9 +5,14 @@ import random
 from env import FormEnv
 from agent import RuleBasedAgent
 
-TASK = os.environ.get("TASK", "medium")
+API_BASE_URL = os.getenv("API_BASE_URL", "local")
+MODEL_NAME = os.getenv("MODEL_NAME", "rule-based")
+HF_TOKEN = os.getenv("HF_TOKEN")
+LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
+
+TASK = os.getenv("TASK", "medium")
 ENV_NAME = "form-filling-openenv"
-MODEL = "rule-based"
+MODEL = MODEL_NAME
 
 
 def main():
