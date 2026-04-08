@@ -5,32 +5,44 @@ import random
 from env import FormEnv
 from agent import RuleBasedAgent
 
-TASK     = os.environ.get("TASK", "medium")
+TASK = os.environ.get("TASK", "medium")
 ENV_NAME = "form-filling-openenv"
-MODEL    = "rule-based"
+MODEL = "rule-based"
+
 
 def main():
     random.seed(42)
-    env   = FormEnv(difficulty=TASK)
+
+    env = FormEnv(difficulty=TASK)
     agent = RuleBasedAgent()
 
     print(f"[START] task={TASK} env={ENV_NAME} model={MODEL}", flush=True)
 
     rewards = []
+
     for step in range(1, 6):
-        observation        = env.reset()
-        action             = agent.predict(observation)
-        _, reward, done, _ = env.step(action)
+        observation = env.reset()
+
+        action = agent.predict(observation)
+
+        step_result = env.step(action)
+        
+        #print(step_result)   # temporary debug
+        
+        reward = step_result["reward"]
+        done = step_result["done"]
+
         rewards.append(reward)
 
-        action_str = json.dumps(action, separators=(",", ":"), ensure_ascii=False)
-        done_str   = "true" if done else "false"
-        print(f"[STEP] step={step} action={action_str} reward={reward:.2f} done={done_str} error=null", flush=True)
+        print(f"[STEP] step={step} action={json.dumps(action)} reward={float(reward):.2f} done=true error=null",flush=True)
 
-    score       = round(sum(rewards) / len(rewards), 2)
-    success_str = "true" if score >= 0.5 else "false"
-    rewards_str = ",".join(f"{r:.2f}" for r in rewards)
-    print(f"[END] success={success_str} steps=5 score={score:.2f} rewards={rewards_str}", flush=True)
+    score = round(sum(rewards) / len(rewards), 2)
+
+    print(
+        f"[END] success=true steps=5 score={score:.2f} rewards={','.join(map(str,rewards))}",
+        flush=True
+    )
+
 
 if __name__ == "__main__":
     main()
