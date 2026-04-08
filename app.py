@@ -53,7 +53,10 @@ def _get_env(session_id: str) -> FormEnv:
 
 # ── Pydantic models ───────────────────────────────────────────────────────────
 
-class ResetRequest(BaseModel):msg: str = ""task: Optional[str] = DEFAULT_TASK seed: Optional[int] = None
+class ResetRequest(BaseModel):
+    # msg: str = ""
+    task: Optional[str] = DEFAULT_TASK 
+    seed: Optional[int] = None
 
 model_config = {
     "json_schema_extra": {
@@ -146,7 +149,7 @@ def health():
 
 
 @app.post("/reset", response_model=ResetResponse, summary="Start a new episode")
-def reset(body: ResetRequest):
+def reset(body: ResetRequest = ResetRequest()):
     """
     Start a new episode.
     - **task**: `easy` | `medium` | `hard`  (default: `medium`)
@@ -164,7 +167,7 @@ def reset(body: ResetRequest):
         random.seed(body.seed)
 
     env         = FormEnv(difficulty=task)
-    observation = env.reset()
+    observation = env.reset()["observation"]
     session_id  = str(uuid.uuid4())
     _sessions[session_id] = env
 
