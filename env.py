@@ -33,11 +33,13 @@ class FormEnv:
         self._done = True
 
     # ------------------------------------------------------------------
-    def reset(self) -> str:
-        """Pick a random example and return the raw input text."""
-        self._current = random.choice(self.examples)
-        self._done = False
-        return self._current["input"]
+     def reset(self):
+    self._current = random.choice(self.examples)
+    self._done = False
+
+    return {
+        "observation": self._current["input"]
+    }
 
     # ------------------------------------------------------------------
     def step(self, action: dict):
@@ -83,7 +85,12 @@ class FormEnv:
         self._done = True
         state = self._current["input"]
         normalised = round(total_reward / len(self.FIELDS), 2)
-        return state, normalised, True, info
+        return {
+            "observation": state,
+            "reward": normalised,
+            "done": True,
+            "info": info
+        }
 
     # ------------------------------------------------------------------
     def _score_field(self, field: str, predicted: str, expected: str) -> float:
