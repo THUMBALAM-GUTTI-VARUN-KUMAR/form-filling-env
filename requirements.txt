@@ -1,0 +1,4 @@
+# Form Filling OpenEnv
+# Pure rule-based system — no external APIs or LLMs required.
+# All dependencies are Python standard library only.
+gradio

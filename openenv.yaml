@@ -1,0 +1,73 @@
+name: form-filling-openenv
+version: "1.0"
+description: >
+  A structured information extraction environment where an agent parses
+  messy, real-world style user text and extracts key personal fields.
+
+# ── Spaces ──────────────────────────────────────────────────────────────────
+state_space:
+  type: text
+  description: "Free-form string — may contain typos, slang, Hinglish, abbreviations, noise"
+  example: "hey its prathik rao. im 27. blr based. reach me on 98765 43210."
+
+action_space:
+  type: dict
+  fields:
+    - name:  "Full person name (title-cased)"
+    - age:   "Integer as string, e.g. '28'"
+    - city:  "Canonical Indian city name, e.g. 'Bangalore'"
+    - phone: "10-digit mobile number string, no spaces or dashes"
+  missing_value: "unknown"
+
+reward_range: [0.0, 1.0]
+reward_per_field:
+  correct_match: 1.0
+  partial_match: 0.5
+  wrong_or_missing: 0.0
+reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
+
+# ── Tasks ────────────────────────────────────────────────────────────────────
+tasks:
+  easy:
+    description: >
+      Well-structured inputs with clear labels (Name:, Age:, City:, Phone:).
+      No abbreviations, no noise, all four fields always present.
+    examples: 17
+    expected_agent_score: ">= 3.5 / 4.0"
+
+  medium:
+    description: >
+      Semi-structured inputs. May use abbreviations (blr, hyd, mum, del),
+      casual phrasing, shorthand, and occasional missing fields.
+    examples: 17
+    expected_agent_score: ">= 2.5 / 4.0"
+
+  hard:
+    description: >
+      Adversarial inputs. Hinglish, slang, repeated/conflicting phone numbers,
+      approximate ages, noise sentences, and multiple missing fields.
+    examples: 16
+    expected_agent_score: ">= 1.5 / 4.0"
+
+# ── Episode structure ────────────────────────────────────────────────────────
+episode:
+  type: single-turn
+  steps_per_episode: 1
+  termination: after_first_step
+
+# ── Evaluation ───────────────────────────────────────────────────────────────
+evaluation:
+  metric: average_reward_per_episode
+  runs_per_difficulty: 10
+  baseline_agent: rule-based (regex + keyword matching)
+
+# ── Metadata ─────────────────────────────────────────────────────────────────
+metadata:
+  domain: NLP / Information Extraction
+  language: English + Hinglish (code-switched Hindi-English)
+  region: India
+  real_world_use_cases:
+    - CRM form auto-fill
+    - Call-centre data capture
+    - Customer onboarding chatbots
+    - Contact database cleaning

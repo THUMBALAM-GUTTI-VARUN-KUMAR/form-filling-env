@@ -1,0 +1,208 @@
+{
+  "easy": [
+    {
+      "input": "Name: Aarav Sharma. Age: 28. City: Mumbai. Phone: 9876543210.",
+      "target": {"name": "Aarav Sharma", "age": "28", "city": "Mumbai", "phone": "9876543210"}
+    },
+    {
+      "input": "My name is Priya Nair. I am 34 years old. I live in Bangalore. Contact: 8123456789.",
+      "target": {"name": "Priya Nair", "age": "34", "city": "Bangalore", "phone": "8123456789"}
+    },
+    {
+      "input": "Full Name: Rohit Verma. Age: 22. City: Delhi. Phone: 7011234567.",
+      "target": {"name": "Rohit Verma", "age": "22", "city": "Delhi", "phone": "7011234567"}
+    },
+    {
+      "input": "Name: Sneha Reddy. Age: 30. City: Hyderabad. Phone: 9000112233.",
+      "target": {"name": "Sneha Reddy", "age": "30", "city": "Hyderabad", "phone": "9000112233"}
+    },
+    {
+      "input": "I am Karan Mehta. Age is 25. City: Pune. Phone Number: 8899001122.",
+      "target": {"name": "Karan Mehta", "age": "25", "city": "Pune", "phone": "8899001122"}
+    },
+    {
+      "input": "Name: Divya Iyer. Age: 27. City: Chennai. Phone: 9345678901.",
+      "target": {"name": "Divya Iyer", "age": "27", "city": "Chennai", "phone": "9345678901"}
+    },
+    {
+      "input": "Full name: Arjun Kapoor. I'm 31 years old. Located in Kolkata. My number is 7890123456.",
+      "target": {"name": "Arjun Kapoor", "age": "31", "city": "Kolkata", "phone": "7890123456"}
+    },
+    {
+      "input": "Name: Meera Pillai. Age: 29. City: Kochi. Phone: 9812345670.",
+      "target": {"name": "Meera Pillai", "age": "29", "city": "Kochi", "phone": "9812345670"}
+    },
+    {
+      "input": "My details: Name - Vikram Singh. Age - 40. City - Jaipur. Phone - 9988776655.",
+      "target": {"name": "Vikram Singh", "age": "40", "city": "Jaipur", "phone": "9988776655"}
+    },
+    {
+      "input": "Name: Ananya Das. Age: 23. City: Bhubaneswar. Phone: 6370011223.",
+      "target": {"name": "Ananya Das", "age": "23", "city": "Bhubaneswar", "phone": "6370011223"}
+    },
+    {
+      "input": "Name: Suresh Kumar. Age: 45. City: Ahmedabad. Phone: 9512345678.",
+      "target": {"name": "Suresh Kumar", "age": "45", "city": "Ahmedabad", "phone": "9512345678"}
+    },
+    {
+      "input": "Full Name: Pooja Joshi. Age: 33. City: Lucknow. Phone: 8765432109.",
+      "target": {"name": "Pooja Joshi", "age": "33", "city": "Lucknow", "phone": "8765432109"}
+    },
+    {
+      "input": "Name: Rahul Gupta. Age: 26. City: Nagpur. Phone: 9876001234.",
+      "target": {"name": "Rahul Gupta", "age": "26", "city": "Nagpur", "phone": "9876001234"}
+    },
+    {
+      "input": "Name: Kavya Menon. Age: 21. City: Thiruvananthapuram. Phone: 9447001122.",
+      "target": {"name": "Kavya Menon", "age": "21", "city": "Thiruvananthapuram", "phone": "9447001122"}
+    },
+    {
+      "input": "Name: Nikhil Bose. Age: 38. City: Guwahati. Phone: 9435112233.",
+      "target": {"name": "Nikhil Bose", "age": "38", "city": "Guwahati", "phone": "9435112233"}
+    },
+    {
+      "input": "Name: Ishaan Trivedi. Age: 19. City: Indore. Phone: 7314567890.",
+      "target": {"name": "Ishaan Trivedi", "age": "19", "city": "Indore", "phone": "7314567890"}
+    },
+    {
+      "input": "Name: Riya Chatterjee. Age: 24. City: Patna. Phone: 9771234560.",
+      "target": {"name": "Riya Chatterjee", "age": "24", "city": "Patna", "phone": "9771234560"}
+    }
+  ],
+  "medium": [
+    {
+      "input": "hey its me, prathik rao. im 27. blr based. reach me on 98765 43210.",
+      "target": {"name": "Prathik Rao", "age": "27", "city": "Bangalore", "phone": "9876543210"}
+    },
+    {
+      "input": "ph: 8011223344. nm: Fatima Sheikh. cty: hyd. age 32.",
+      "target": {"name": "Fatima Sheikh", "age": "32", "city": "Hyderabad", "phone": "8011223344"}
+    },
+    {
+      "input": "Just turned 29 last week! Name's Gaurav Tiwari, based in mum. Call on 9090909090.",
+      "target": {"name": "Gaurav Tiwari", "age": "29", "city": "Mumbai", "phone": "9090909090"}
+    },
+    {
+      "input": "I am Lakshmi Venkat, age 41. city: chennai, mob: 9500011223.",
+      "target": {"name": "Lakshmi Venkat", "age": "41", "city": "Chennai", "phone": "9500011223"}
+    },
+    {
+      "input": "Name - Aman Saxena | Age - 35 | City - del | Number - 9810001234",
+      "target": {"name": "Aman Saxena", "age": "35", "city": "Delhi", "phone": "9810001234"}
+    },
+    {
+      "input": "contact info: Neha Kulkarni, pune, 26yrs old. cell: 9021234567",
+      "target": {"name": "Neha Kulkarni", "age": "26", "city": "Pune", "phone": "9021234567"}
+    },
+    {
+      "input": "registering for the event. I'm Ravi Shankar, 44, from hyd. my no. is 8885550011.",
+      "target": {"name": "Ravi Shankar", "age": "44", "city": "Hyderabad", "phone": "8885550011"}
+    },
+    {
+      "input": "Mobile: 7700112233. Living in kolkata. Name is Sanjana Ghosh. Twenty-eight years old.",
+      "target": {"name": "Sanjana Ghosh", "age": "28", "city": "Kolkata", "phone": "7700112233"}
+    },
+    {
+      "input": "This is Tarun Bajaj from noida. 30 years. Contact at 9999988888.",
+      "target": {"name": "Tarun Bajaj", "age": "30", "city": "Noida", "phone": "9999988888"}
+    },
+    {
+      "input": "hey register me pls - Shreya Patel, 22 yo, in ahm, number 9426001122.",
+      "target": {"name": "Shreya Patel", "age": "22", "city": "Ahmedabad", "phone": "9426001122"}
+    },
+    {
+      "input": "Here are my deets: Kartik Naidu, 33 yrs, banglore, 9845001234.",
+      "target": {"name": "Kartik Naidu", "age": "33", "city": "Bangalore", "phone": "9845001234"}
+    },
+    {
+      "input": "phone 9123456780. I go by Zoya Khan. Currently in lko. I'm 25.",
+      "target": {"name": "Zoya Khan", "age": "25", "city": "Lucknow", "phone": "9123456780"}
+    },
+    {
+      "input": "Sunita Rao here. I stay in chennai. 47 years. Reach me: 9884001122.",
+      "target": {"name": "Sunita Rao", "age": "47", "city": "Chennai", "phone": "9884001122"}
+    },
+    {
+      "input": "Name: Deepak Mishra. He's 36. City is Varanasi. Ph.no 9415001234.",
+      "target": {"name": "Deepak Mishra", "age": "36", "city": "Varanasi", "phone": "9415001234"}
+    },
+    {
+      "input": "mum, 29, Harsha Jain, 8080001234. please add to list.",
+      "target": {"name": "Harsha Jain", "age": "29", "city": "Mumbai", "phone": "8080001234"}
+    },
+    {
+      "input": "My info - Reshma Begum | Hyd | 31 | 9652001234",
+      "target": {"name": "Reshma Begum", "age": "31", "city": "Hyderabad", "phone": "9652001234"}
+    },
+    {
+      "input": "blr lad Akash Nambiar, 24 yr old. ph: 8050001234",
+      "target": {"name": "Akash Nambiar", "age": "24", "city": "Bangalore", "phone": "8050001234"}
+    }
+  ],
+  "hard": [
+    {
+      "input": "yo sign me up!! its priyanka... priyanka joshi okk. dunno exactly but around 23-24 ish. somewhere in blr ig. u can ping me on 98 7654 3210 or whatsapp same number lol",
+      "target": {"name": "Priyanka Joshi", "age": "23", "city": "Bangalore", "phone": "9876543210"}
+    },
+    {
+      "input": "please register for tomorrow's event. contact = 9 0 0 0 1 1 2 2 3 3. I forget my age haha must be 30 or 31. I'm from mumb. name - rohaan malhotra.",
+      "target": {"name": "Rohaan Malhotra", "age": "30", "city": "Mumbai", "phone": "9000112233"}
+    },
+    {
+      "input": "Bhai just add kar de. Vivek Yadav naam hai. Hyderbad me rehta hoon. Umar 28 saal. number likh le: 8 8 0 0 1 1 2 2 3 3",
+      "target": {"name": "Vivek Yadav", "age": "28", "city": "Hyderabad", "phone": "8800112233"}
+    },
+    {
+      "input": "form bhar raha hoon. toh... naam Snehal Patil hai. age kuch 26 hogi. pune se hoon main. number: 020-9988776655... oops i mean 9988776655",
+      "target": {"name": "Snehal Patil", "age": "26", "city": "Pune", "phone": "9988776655"}
+    },
+    {
+      "input": "Hi I need to register. My fren told me to fill this. My name is Abdul Rehman, I have lived in Delhi all my life, I am turning 39 next month so technically 38 rn. You can call me on 9810000001 if you can't reach try 9810000002.",
+      "target": {"name": "Abdul Rehman", "age": "38", "city": "Delhi", "phone": "9810000001"}
+    },
+    {
+      "input": "please help registration. nme: CHARU SINHA. age=mid 20s maybe 24 or 25. city - kalkatta. ph 033-9836001234 / 9836001234",
+      "target": {"name": "Charu Sinha", "age": "24", "city": "Kolkata", "phone": "9836001234"}
+    },
+    {
+      "input": "ugh this form is so annoying. fine. lokesh kumar. staying in ngp these days. i think i m 32? my old number was 9823000001 but new one is 9823000002 use this one.",
+      "target": {"name": "Lokesh Kumar", "age": "32", "city": "Nagpur", "phone": "9823000002"}
+    },
+    {
+      "input": "whats up team, adding myself - Bijli Devi (yes thats my real name lol). I'm blr side only. age 27. ring me 9945112233 ok byeee",
+      "target": {"name": "Bijli Devi", "age": "27", "city": "Bangalore", "phone": "9945112233"}
+    },
+    {
+      "input": "Name: Irfan Siddiqui. I'll be 45 in 3 months so put 44. Location somewhere near hyd. Cell: 9 1 2 3 4 5 6 7 8 0.",
+      "target": {"name": "Irfan Siddiqui", "age": "44", "city": "Hyderabad", "phone": "9123456780"}
+    },
+    {
+      "input": "hey!! its meee tanvi tanvi agarwal!! i live in jpr now moved from delhi. 21 last birthday. number is 9829112233 same as before!!",
+      "target": {"name": "Tanvi Agarwal", "age": "21", "city": "Jaipur", "phone": "9829112233"}
+    },
+    {
+      "input": "Hola soy Ramesh Nair. In india we say namaste haha. I'm 50. From ker but now based in kochi only. Num: 9847001122.",
+      "target": {"name": "Ramesh Nair", "age": "50", "city": "Kochi", "phone": "9847001122"}
+    },
+    {
+      "input": "bhai registration chahiye urgent. naam: Pooja... Pooja Dubey. city: prayagraj (allahabad bolte hain). age shayad 29. mob: 9506001234",
+      "target": {"name": "Pooja Dubey", "age": "29", "city": "Prayagraj", "phone": "9506001234"}
+    },
+    {
+      "input": "Details - just use whatever. Shantanu Jha. 38 ya 39 (birthday next week so lets say 38). guwahati. 6901234567. ok done cya",
+      "target": {"name": "Shantanu Jha", "age": "38", "city": "Guwahati", "phone": "6901234567"}
+    },
+    {
+      "input": "unknown person here lol jk its Nalini Krishnan. I am from madras what you call chennai. around 33 age. contact no. 9841001234. thank u",
+      "target": {"name": "Nalini Krishnan", "age": "33", "city": "Chennai", "phone": "9841001234"}
+    },
+    {
+      "input": "sup. vikky here. full name vikas thakur. i travel a lot so no fixed city but mostly del. im 26 going on 27. cell: 9911001234",
+      "target": {"name": "Vikas Thakur", "age": "26", "city": "Delhi", "phone": "9911001234"}
+    },
+    {
+      "input": "ye kya tamasha hai form ka. khair. Madhuri Desai. pune-mumbai border pe rehti hoon mostly mum. 41 saal. number nahi batana but theek hai 9769001234.",
+      "target": {"name": "Madhuri Desai", "age": "41", "city": "Mumbai", "phone": "9769001234"}
+    }
+  ]
+}
