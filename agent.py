@@ -1,110 +1,92 @@
 import re
 
-
 CITY_MAP = {
     "blr": "Bangalore",
-    "bengaluru": "Bangalore",
     "bangalore": "Bangalore",
+    "bengaluru": "Bangalore",
     "hyd": "Hyderabad",
-    "mum": "Mumbai",
+    "hyderabad": "Hyderabad",
     "delhi": "Delhi",
-    "chennai": "Chennai"
+    "mumbai": "Mumbai",
+    "mum": "Mumbai",
+    "pune": "Pune",
+    "jaipur": "Jaipur",
+    "patna": "Patna",
+    "bhopal": "Bhopal",
+    "surat": "Surat",
+    "amravati": "Amravati",
+    "noida": "Noida"
 }
 
 
 class RuleBasedAgent:
 
-    def predict(self, text):
+    def predict(self, observation):
 
-    # Handle comma-separated quick format
-    parts = [x.strip() for x in text.split(",")]
+        text = observation["observation"].lower()
 
-    if len(parts) == 4:
-        return {
-            "name": parts[0].title(),
-            "age": parts[1],
-            "city": parts[2].title(),
-            "phone": parts[3]
+        result = {
+            "name": "unknown",
+            "age": "unknown",
+            "city": "unknown",
+            "phone": "unknown"
         }
 
-    # Default regex extraction
-    return {
-        "name": self.extract_name(text),
-        "age": self.extract_age(text),
-        "city": self.extract_city(text),
-        "phone": self.extract_phone(text)
-    }
+        # -------- COMMA FORMAT --------
+        if "," in text:
+            parts = [x.strip() for x in text.split(",")]
 
+            if len(parts) >= 4:
+                result["name"] = parts[0].title()
+                result["age"] = re.sub(r"\D", "", parts[1])
 
-    # ---------------- NAME ----------------
-    def extract_name(self, text):
+                city_raw = parts[2].lower()
+                result["city"] = CITY_MAP.get(city_raw, city_raw.title())
 
-        patterns = [
-            r"my name is ([A-Za-z]+(?:\s[A-Za-z]+){0,2})",
-            r"i am ([A-Za-z]+(?:\s[A-Za-z]+){0,2})",
-            r"i'm ([A-Za-z]+(?:\s[A-Za-z]+){0,2})",
-            r"its ([A-Za-z]+(?:\s[A-Za-z]+){0,2})"
-        ]
+                phone = re.sub(r"\D", "", parts[3])
+                if len(phone) >= 10:
+                    result["phone"] = phone[-10:]
 
-        for pat in patterns:
-            match = re.search(pat, text, re.IGNORECASE)
-            if match:
-                return match.group(1).title()
+                return result
 
-        return "unknown"
+        # -------- PHONE --------
+        phone_match = re.search(r"\d{10,13}", text)
+        if phone_match:
+            result["phone"] = phone_match.group()[-10:]
 
-    # ---------------- AGE ----------------
-    def extract_age(self, text):
+        # -------- AGE --------
+        age_match = re.search(r"\b(\d{1,2})\b", text)
+        if age_match:
+            result["age"] = age_match.group(1)
 
-        patterns = [
-            r"age is (\d{1,2})",
-            r"age[: ](\d{1,2})",
-            r"(\d{1,2}) years old",
-            r"i am (\d{1,2})"
-        ]
+        # -------- CITY --------
+        for key in CITY_MAP:
+            if key in text:
+                result["city"] = CITY_MAP[key]
+                break
 
-        for pat in patterns:
-            match = re.search(pat, text, re.IGNORECASE)
-            if match:
-                return match.group(1)
+        # -------- NAME --------
+        words = text.split()
 
-        return "unknown"
+        ignore_words = {
+            "i", "am", "my", "name", "is", "age", "from",
+            "city", "phone", "number", "years", "old",
+            "living", "in", "call", "me"
+        }
 
-    # ---------------- CITY ----------------
-    def extract_city(self, text):
+        name_words = []
 
-        t = text.lower()
+        for word in words:
+            clean = re.sub(r'[^a-z]', '', word)
 
-        for key, value in CITY_MAP.items():
-            if key in t:
-                return value
+            if clean and clean not in ignore_words and clean not in CITY_MAP:
+                if not clean.isdigit():
+                    name_words.append(clean)
 
-        patterns = [
-            r"from ([A-Za-z]+)",
-            r"in ([A-Za-z]+)",
-            r"based in ([A-Za-z]+)",
-            r"live in ([A-Za-z]+)"
-        ]
+            if len(name_words) == 2:
+                break
 
-        for pat in patterns:
-            match = re.search(pat, text, re.IGNORECASE)
-            if match:
-                return match.group(1).title()
+        if name_words:
+            result["name"] = " ".join(name_words).title()
 
-        return "unknown"
-
-    # ---------------- PHONE ----------------
-    def extract_phone(self, text):
-
-        match = re.search(r"\b[6-9]\d{9}\b", text)
-
-        if match:
-            return match.group()
-
-        return "unknown"
-
-
-# For app.py import compatibility
-def extract(text):
-    agent = RuleBasedAgent()
-    return agent.predict(text)
+        return result
