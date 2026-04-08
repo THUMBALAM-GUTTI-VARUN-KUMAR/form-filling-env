@@ -34,6 +34,8 @@ tasks:
       No abbreviations, no noise, all four fields always present.
     examples: 17
     expected_agent_score: ">= 3.5 / 4.0"
+    grader:
+      type: reward_based
 
   medium:
     description: >
@@ -41,6 +43,8 @@ tasks:
       casual phrasing, shorthand, and occasional missing fields.
     examples: 17
     expected_agent_score: ">= 2.5 / 4.0"
+    grader:
+      type: reward_based
 
   hard:
     description: >
@@ -48,6 +52,8 @@ tasks:
       approximate ages, noise sentences, and multiple missing fields.
     examples: 16
     expected_agent_score: ">= 1.5 / 4.0"
+    grader:
+      type: reward_based
 
 # ── Episode structure ────────────────────────────────────────────────────────
 episode:
