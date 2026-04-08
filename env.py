@@ -34,12 +34,12 @@ class FormEnv:
 
     # ------------------------------------------------------------------
      def reset(self):
-    self._current = random.choice(self.examples)
-    self._done = False
-
-    return {
-        "observation": self._current["input"]
-    }
+         self._current = random.choice(self.examples)
+         self._done = False
+         
+         return {
+             "observation": self._current["input"]
+         }
 
     # ------------------------------------------------------------------
     def step(self, action: dict):
