@@ -3,23 +3,52 @@ import json
 import random
 
 from env import FormEnv
-from agent import RuleBasedAgent
+from openai import OpenAI
 
-API_BASE_URL = os.getenv("API_BASE_URL", "local")
-MODEL_NAME = os.getenv("MODEL_NAME", "rule-based")
-HF_TOKEN = os.getenv("HF_TOKEN")
-LOCAL_IMAGE_NAME = os.getenv("LOCAL_IMAGE_NAME")
 
+API_BASE_URL = os.environ["API_BASE_URL"]
+API_KEY = os.environ["API_KEY"]
+
+MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-4o-mini")
 TASK = os.getenv("TASK", "medium")
+
 ENV_NAME = "form-filling-openenv"
 MODEL = MODEL_NAME
+
+
+client = OpenAI(
+    api_key=API_KEY,
+    base_url=API_BASE_URL
+)
+
+
+def llm_predict(observation):
+    print("LLM CALL STARTING", flush=True)
+    response = client.chat.completions.create(
+        model=MODEL_NAME,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "Extract name, age, city, and phone from the given text. "
+                    "Return ONLY valid JSON in this format: "
+                    "{\"name\":\"...\",\"age\":0,\"city\":\"...\",\"phone\":\"...\"}"
+                )
+            },
+            {
+                "role": "user",
+                "content": str(observation)
+            }
+        ]
+    )
+    print("LLM CALL FINISHED", flush=True)
+    return json.loads(response.choices[0].message.content)
 
 
 def main():
     random.seed(42)
 
     env = FormEnv(difficulty=TASK)
-    agent = RuleBasedAgent()
 
     print(f"[START] task={TASK} env={ENV_NAME} model={MODEL}", flush=True)
 
@@ -28,18 +57,18 @@ def main():
     for step in range(1, 6):
         observation = env.reset()
 
-        action = agent.predict(observation)
+        action = llm_predict(observation)
 
         step_result = env.step(action)
-        
-        #print(step_result)   # temporary debug
-        
+
         reward = step_result["reward"]
-        done = step_result["done"]
 
         rewards.append(reward)
 
-        print(f"[STEP] step={step} action={json.dumps(action)} reward={float(reward):.2f} done=true error=null",flush=True)
+        print(
+            f"[STEP] step={step} action={json.dumps(action)} reward={float(reward):.2f} done=true error=null",
+            flush=True
+        )
 
     score = round(sum(rewards) / len(rewards), 2)
 
