@@ -4,6 +4,16 @@ version = "0.1.0"
 description = "OpenEnv form filling environment"
 requires-python = ">=3.10"
 
+dependencies = [
+    "fastapi",
+    "uvicorn",
+    "pydantic",
+    "openenv-core>=0.2.0"
+]
+
+[project.scripts]
+server = "app:app"
+
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
