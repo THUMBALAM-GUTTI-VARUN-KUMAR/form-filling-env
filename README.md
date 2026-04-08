@@ -1,173 +1,98 @@
----
-title: Form Filling Env
-emoji: 🤖
+title: Form Filling
+emoji: 🚀
 colorFrom: blue
-colorTo: green
-sdk: gradio
-app_file: app.py
+colorTo: purple
+sdk: docker
 pinned: false
----
+Form Filling OpenEnv
 
-# 📋 AI Form Data Extractor
+OpenEnv-compatible FastAPI backend — no LLMs, no external APIs, fully deterministic.
 
+📋 Form Filling OpenEnv
+OpenEnv-compatible FastAPI backend — no LLMs, no external APIs, fully deterministic.
 
-> Extract structured contact data from messy, unstructured user text — instantly, with zero APIs or LLMs.
+An environment where an agent extracts structured contact data (name, age, city, phone) from messy, unstructured user text.
 
----
-
-## Problem
-
-Users rarely fill forms neatly. They send contact details as casual messages — full of slang, abbreviations, Hinglish, random field order, and missing information:
-
-> *"hey bro its rahul blr side 25 yrs call me 9876543210"*
-
-Traditional form validation rejects this. Manual parsing is slow and error-prone. This project solves it automatically.
-
----
-
-## Solution
-
-A deterministic, rule-based extraction engine parses free-form text and outputs four clean structured fields:
-
-| Field | Description |
-|---|---|
-| `name` | Full person name (Title Case) |
-| `age` | Numeric age as a string |
-| `city` | Canonical city name (e.g. `blr` → `Bangalore`) |
-| `phone` | 10-digit mobile number |
-
-If a field cannot be found, it returns `"unknown"`.
-
----
-
-## Features
-
-- ✅ Handles messy, casual, and noisy text
-- ✅ Works with slang, Hinglish, and abbreviations (`blr`, `hyd`, `mum`, `del`)
-- ✅ Handles informal and repeated name patterns
-- ✅ Extract valid 10-digit phone numbers from noisy input
-- ✅ Rule-based and deterministic — same input always gives same output
-- ✅ Fast and lightweight — no internet, no GPU, no API keys
-- ✅ Interactive Gradio UI included
-
----
-
-## Demo
-
-### Run the Gradio app
-
-```bash
-pip install gradio
-python run app.py
-```
-
-### Run inference script (hackathon format)
-
-```bash
-python inference.py
-# or with difficulty:
-TASK=hard python inference.py
-```
-
-### Run with Docker
-
-```bash
+🚀 Quick Start
+Local
+pip install -r requirements.txt
+uvicorn app:app --host 0.0.0.0 --port 7860
+Docker
 docker build -t form-filling-openenv .
-docker run --rm form-filling-openenv
-```
+docker run -p 7860:7860 form-filling-openenv
+HuggingFace Spaces
+Set SDK: Docker in your Space settings. The Dockerfile already exposes port 7860.
 
----
+🔌 API Reference
+GET /
+Health check — returns environment metadata.
 
-## Example
+POST /reset
+Start a new episode.
 
-**Input**
-```
-hey bro rahul here blr 25 call me 9876543210
-```
+Request
 
-**Output**
-```json
+{ "task": "medium", "seed": 42 }
+task — easy | medium | hard (default: medium) seed — optional integer for reproducibility
+
+Response
+
 {
-  "name": "Rahul",
-  "age": "25",
-  "city": "Bangalore",
-  "phone": "9876543210"
+  "session_id": "uuid",
+  "observation": "hey its prathik rao. im 27. blr based. reach me on 98765 43210.",
+  "task": "medium",
+  "state_space": { "type": "text", "description": "..." },
+  "action_space": { "type": "dict", "fields": ["name","age","city","phone"], "...": "..." },
+  "reward_range": [0.0, 1.0]
 }
-```
+POST /step
+Submit the agent's extracted fields.
 
-**Harder input**
-```
-yo sign me up!! its priyanka... priyanka joshi okk. around 23-24 ish.
-somewhere in blr ig. ping me on 98 7654 3210
-```
+Request
 
-**Output**
-```json
 {
-  "name": "Priyanka Joshi",
-  "age": "23",
-  "city": "Bangalore",
-  "phone": "9876543210"
+  "session_id": "uuid-from-reset",
+  "action": {
+    "name":  "Prathik Rao",
+    "age":   "27",
+    "city":  "Bangalore",
+    "phone": "9876543210"
+  }
 }
-```
+Response
 
----
+{
+  "session_id": "uuid",
+  "observation": "hey its prathik rao. im 27. blr based. reach me on 98765 43210.",
+  "reward": 1.0,
+  "done": true,
+  "info": {
+    "name":  { "predicted": "Prathik Rao", "expected": "Prathik Rao", "reward": 1.0 },
+    "age":   { "predicted": "27",          "expected": "27",          "reward": 1.0 },
+    "city":  { "predicted": "Bangalore",   "expected": "Bangalore",   "reward": 1.0 },
+    "phone": { "predicted": "9876543210",  "expected": "9876543210",  "reward": 1.0 }
+  }
+}
+🏆 Reward Scheme
+Outcome	Score
+Exact match	1.0
+Partial match (alias / substring / age ±1)	0.5
+Wrong or missing	0.0
+Episode reward = mean(field scores) → range [0.0, 1.0]
 
-## Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Language | Python 3.10 |
-| UI | Gradio |
-| Extraction | Regex + rule-based logic |
-| Environment | OpenEnv-style (`env.py`) |
-| Containerisation | Docker |
-
----
-
-## Project Structure
-
-```
-form_filling_openenv/
-├── app.py            # Gradio UI
-├── agent.py          # RuleBasedAgent — core extraction logic
-├── env.py            # FormEnv — reset(), step(), reward scoring
-├── inference.py      # Hackathon runner — [START][STEP]x5[END]
-├── dataset.json      # 50 labelled examples (easy / medium / hard)
-├── openenv.yaml      # OpenEnv config
-├── requirements.txt  # gradio
-├── Dockerfile
-└── README.md
-```
-
----
-
-## Evaluation
-
-The `FormEnv` environment scores predictions field-by-field:
-
-| Outcome | Score |
-|---|---|
-| Exact match | 1.0 |
-| Partial match (alias / substring / age ±1) | 0.5 |
-| Wrong or missing | 0.0 |
-
-**Episode reward = mean(field scores) → range [0.0, 1.0]**
-
-Achieves high accuracy across benchmark dataset examples.
-
----
-
-## Note
-
-> **No external APIs or LLMs are used.** This system is fully self-contained and runs offline. All extraction is performed by hand-crafted regex patterns and keyword matching.
-
-
----
-
-## 🚀 Future Improvements
-
-- Multi-entity extraction (handling multiple users in a single input)
-- Context-aware disambiguation (e.g., multiple cities or phone numbers)
-- Integration with chatbot or form automation systems
-- Hybrid rule + ML approach for improved flexibility
+📊 Difficulty Levels
+Level	Description
+easy	Fully labelled, structured input
+medium	Abbreviations, casual phrasing, some missing fields
+hard	Hinglish, slang, conflicting phones, approximate ages
+🗂 Project Structure
+├── app.py          ← FastAPI backend (OpenEnv API)
+├── env.py          ← FormEnv: reset(), step(), scoring
+├── agent.py        ← RuleBasedAgent (regex + keyword matching)
+├── inference.py    ← CLI runner: [START][STEP]x5[END]
+├── dataset.json    ← 50 labelled examples (easy/medium/hard)
+├── openenv.yaml    ← OpenEnv config
+├── requirements.txt
+└── Dockerfile
+ℹ️ Note
+"No external APIs or LLMs are used. The environment is fully self-contained and runs offline."
