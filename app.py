@@ -54,12 +54,19 @@ def _get_env(session_id: str) -> FormEnv:
 # ── Pydantic models ───────────────────────────────────────────────────────────
 
 class ResetRequest(BaseModel):
-    task: Optional[str] = DEFAULT_TASK
-    seed: Optional[int] = None
+msg: str = ""
+task: Optional[str] = DEFAULT_TASK
+seed: Optional[int] = None
 
-    model_config = {
-        "json_schema_extra": {"example": {"task": "medium", "seed": 42}}
+model_config = {
+    "json_schema_extra": {
+        "example": {
+            "msg": "",
+            "task": "medium",
+            "seed": 42
+        }
     }
+}
 
 
 class ResetResponse(BaseModel):
