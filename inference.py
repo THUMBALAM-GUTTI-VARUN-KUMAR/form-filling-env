@@ -11,9 +11,9 @@ API_BASE_URL = os.getenv("API_BASE_URL")
 API_KEY = os.getenv("API_KEY")
 
 MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-4o-mini")
-TASK = os.getenv("TASK", "medium")
+TASK = os.getenv("TASK", "noisy_extraction")
 
-ENV_NAME = "form-filling-openenv"
+ENV_NAME = "form-filling-openenv"https://github.com/THUMBALAM-GUTTI-VARUN-KUMAR/form-filling-env/edit/main/inference.py
 MODEL = MODEL_NAME
 
 
