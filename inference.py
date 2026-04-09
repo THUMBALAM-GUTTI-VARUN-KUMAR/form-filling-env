@@ -59,7 +59,7 @@ def llm_predict(observation):
 def main():
     random.seed(42)
 
-    env = FormEnv(difficulty=TASK)
+    env = FormEnv(task=TASK)
 
     print(f"[START] task={TASK} env={ENV_NAME} model={MODEL}", flush=True)
 
