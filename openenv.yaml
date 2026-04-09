@@ -28,7 +28,7 @@ reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
 
 # ── Tasks ────────────────────────────────────────────────────────────────────
 tasks:
-  easy:
+  - name: easy
     description: >
       Well-structured inputs with clear labels (Name:, Age:, City:, Phone:).
       No abbreviations, no noise, all four fields always present.
@@ -37,7 +37,7 @@ tasks:
     grader:
       type: reward_based
 
-  medium:
+  - name: medium
     description: >
       Semi-structured inputs. May use abbreviations (blr, hyd, mum, del),
       casual phrasing, shorthand, and occasional missing fields.
@@ -46,7 +46,7 @@ tasks:
     grader:
       type: reward_based
 
-  hard:
+  - name: hard
     description: >
       Adversarial inputs. Hinglish, slang, repeated/conflicting phone numbers,
       approximate ages, noise sentences, and multiple missing fields.
