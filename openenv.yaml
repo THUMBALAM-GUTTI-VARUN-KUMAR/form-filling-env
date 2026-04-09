@@ -28,28 +28,19 @@ reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
 
 # ── Tasks ────────────────────────────────────────────────────────────────────
 tasks:
-  easy:
+  basic_extraction:
     description: >
-      Well-structured inputs with clear labels (Name:, Age:, City:, Phone:).
-      No abbreviations, no noise, all four fields always present.
-    examples: 17
-    expected_agent_score: ">= 3.5 / 4.0"
+      Extract structured personal details from clean formatted text.
     grader: reward_based
 
-  medium:
+  noisy_extraction:
     description: >
-      Semi-structured inputs. May use abbreviations (blr, hyd, mum, del),
-      casual phrasing, shorthand, and occasional missing fields.
-    examples: 17
-    expected_agent_score: ">= 2.5 / 4.0"
+      Extract personal details from noisy abbreviated informal text.
     grader: reward_based
 
-  hard:
+  adversarial_extraction:
     description: >
-      Adversarial inputs. Hinglish, slang, repeated/conflicting phone numbers,
-      approximate ages, noise sentences, and multiple missing fields.
-    examples: 16
-    expected_agent_score: ">= 1.5 / 4.0"
+      Extract personal details from adversarial conflicting slang-filled text.
     grader: reward_based
 
 # ── Episode structure ────────────────────────────────────────────────────────
