@@ -28,23 +28,25 @@ reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
 
 # ── Tasks ────────────────────────────────────────────────────────────────────
 tasks:
-  basic_extraction:
-    description: >
-      Extract structured personal details from clean formatted text.
-    graders:
-      - reward_based
+  - easy
+  - medium
+  - hard
 
-  noisy_extraction:
-    description: >
-      Extract structured personal details from noisy abbreviated informal text.
-    graders:
-      - reward_based
+task_graders:
+  - task_id: easy
+    task_name: easy
+    grader: reward_based
+    agent_grader: reward_based
 
-  adversarial_extraction:
-    description: >
-      Extract structured personal details from adversarial conflicting slang-filled text.
-    graders:
-      - reward_based
+  - task_id: medium
+    task_name: medium
+    grader: reward_based
+    agent_grader: reward_based
+
+  - task_id: hard
+    task_name: hard
+    grader: reward_based
+    agent_grader: reward_based
 
 # ── Episode structure ────────────────────────────────────────────────────────
 episode:
