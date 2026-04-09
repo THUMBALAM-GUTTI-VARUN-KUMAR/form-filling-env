@@ -11,9 +11,9 @@ API_BASE_URL = os.getenv("API_BASE_URL")
 API_KEY = os.getenv("API_KEY")
 
 MODEL_NAME = os.getenv("MODEL_NAME", "openai/gpt-4o-mini")
-TASK = os.getenv("TASK", "noisy_extraction")
+TASK = os.getenv("TASK", "medium")
 
-ENV_NAME = "form-filling-openenv"https://github.com/THUMBALAM-GUTTI-VARUN-KUMAR/form-filling-env/edit/main/inference.py
+ENV_NAME = "form-filling-openenv"
 MODEL = MODEL_NAME
 
 
@@ -59,7 +59,7 @@ def llm_predict(observation):
 def main():
     random.seed(42)
 
-    env = FormEnv(task=TASK)
+    env = FormEnv(difficulty=TASK)
 
     print(f"[START] task={TASK} env={ENV_NAME} model={MODEL}", flush=True)
 
@@ -101,3 +101,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
