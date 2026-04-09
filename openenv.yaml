@@ -31,17 +31,20 @@ tasks:
   basic_extraction:
     description: >
       Extract structured personal details from clean formatted text.
-    grader: reward_based
+    graders:
+      - reward_based
 
   noisy_extraction:
     description: >
       Extract structured personal details from noisy abbreviated informal text.
-    grader: reward_based
+    graders:
+      - reward_based
 
   adversarial_extraction:
     description: >
       Extract structured personal details from adversarial conflicting slang-filled text.
-    grader: reward_based
+    graders:
+      - reward_based
 
 # ── Episode structure ────────────────────────────────────────────────────────
 episode:
