@@ -28,25 +28,17 @@ reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
 
 # ── Tasks ────────────────────────────────────────────────────────────────────
 tasks:
-  - easy
-  - medium
-  - hard
+  easy:
+    description: Easy extraction cases
+    grader: graders.reward_based
 
-task_graders:
-  - task_id: easy
-    task_name: easy
-    grader: reward_based
-    agent_grader: reward_based
+  medium:
+    description: Medium extraction cases
+    grader: graders.reward_based
 
-  - task_id: medium
-    task_name: medium
-    grader: reward_based
-    agent_grader: reward_based
-
-  - task_id: hard
-    task_name: hard
-    grader: reward_based
-    agent_grader: reward_based
+  hard:
+    description: Hard extraction cases
+    grader: graders.reward_based
 
 # ── Episode structure ────────────────────────────────────────────────────────
 episode:
