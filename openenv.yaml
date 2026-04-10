@@ -28,15 +28,15 @@ reward_normalisation: "sum(field_scores) / num_fields  →  range [0.0, 1.0]"
 
 # ── Tasks ────────────────────────────────────────────────────────────────────
 tasks:
-  easy:
+  - id: easy
     description: Easy extraction cases
     grader: graders.reward_based
 
-  medium:
+  - id: medium
     description: Medium extraction cases
     grader: graders.reward_based
 
-  hard:
+  - id: hard
     description: Hard extraction cases
     grader: graders.reward_based
 
