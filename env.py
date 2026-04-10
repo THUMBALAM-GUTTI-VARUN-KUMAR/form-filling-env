@@ -79,12 +79,12 @@ class FormEnv:
 
         normalised = round(total_reward / len(self.FIELDS), 2)
 
-        return (
-            state,
-            normalised,
-            True,
-            info
-        )
+        return {
+            "observation": state,
+            "reward": normalised,
+            "done": True,
+            "info": info
+        }
 
     # ------------------------------------------------------------
     def _score_field(self, field: str, predicted: str, expected: str):
