@@ -1,6 +1,15 @@
-spec_version: 1
-name: form_filling_env
-type: space
-runtime: fastapi
-app: server.app:app
-port: 7860
+name: form_filling_openenv
+description: Extract structured personal details from messy text
+
+tasks:
+  easy:
+    description: Easy extraction cases
+    grader: graders.reward_based
+
+  medium:
+    description: Medium extraction cases
+    grader: graders.reward_based
+
+  hard:
+    description: Hard extraction cases
+    grader: graders.reward_based
