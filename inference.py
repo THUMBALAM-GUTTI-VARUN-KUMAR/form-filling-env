@@ -79,10 +79,7 @@ def main():
             print(f"LLM FAILED ({e}), USING FALLBACK", flush=True)
             action = RuleBasedAgent().predict(observation)
 
-        step_result = env.step(action)
-
-        reward = step_result["reward"]
-        done = step_result["done"]
+        state, reward, done, info = env.step(action)
 
         rewards.append(reward)
 
