@@ -131,15 +131,16 @@ class StepResponse(BaseModel):
 
 # ── Endpoints ─────────────────────────────────────────────────────────────────
 
-@app.get("/", summary="Health check / environment info")
+@app.get("/")
 def root():
     return {
-        "env":     "form-filling-openenv",
-        "version": "1.0.0",
-        "status":  "ok",
-        "endpoints": {"reset": "POST /reset", "step": "POST /step", "docs": "/docs"},
-        "tasks":        list(VALID_TASKS),
-        "reward_range": [0.0, 1.0],
+        "name": "form_filling_openenv",
+        "type": "environment",
+        "tasks": [
+            {"id": "easy", "grader": "reward_based"},
+            {"id": "medium", "grader": "reward_based"},
+            {"id": "hard", "grader": "reward_based"}
+        ]
     }
 
 
